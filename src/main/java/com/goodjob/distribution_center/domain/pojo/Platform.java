@@ -5,6 +5,10 @@ package com.goodjob.distribution_center.domain.pojo;
  */
 public class Platform {
 
+    /**
+     * 平台属性
+     */
+
     // 平台UUID
     private String uuid;
 
@@ -16,6 +20,13 @@ public class Platform {
 
     // TODO 下属机器状态描述 eg：cpu、内存、性能、存储。。。后续开发特定路由可能用到
     private String[] serverDescriptions;
+
+    /**
+     * 平台位于调度中心时的临时属性
+     */
+
+    // 上次分发使用机器 - 服务于轮询路由策略
+    private Integer lastUseServerIndex;
 
     public String getUuid() {
         return uuid;
@@ -47,5 +58,13 @@ public class Platform {
 
     public void setServerDescriptions(String[] serverDescriptions) {
         this.serverDescriptions = serverDescriptions;
+    }
+
+    public Integer getLastUseServerIndex() {
+        return lastUseServerIndex;
+    }
+
+    public void setLastUseServerIndex(Integer lastUseServerIndex) {
+        this.lastUseServerIndex = lastUseServerIndex;
     }
 }

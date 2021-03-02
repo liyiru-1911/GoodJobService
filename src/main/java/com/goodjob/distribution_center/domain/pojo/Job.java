@@ -31,6 +31,9 @@ public class Job {
     // 路由策略名
     private String routingPolicyName;
 
+    // 重试次数
+    private Integer reTryTimes;
+
     // 是否启用
     private String status;
 
@@ -159,5 +162,13 @@ public class Job {
 
     public void setParams(Object[] params) {
         this.params = params;
+    }
+
+    public Integer getReTryTimes() {
+        return reTryTimes;
+    }
+
+    public void setReTryTimes(Integer reTryTimes) {
+        this.reTryTimes = reTryTimes;
     }
 }

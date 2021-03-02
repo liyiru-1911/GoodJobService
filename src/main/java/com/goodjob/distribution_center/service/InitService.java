@@ -1,5 +1,8 @@
 package com.goodjob.distribution_center.service;
 
+import com.goodjob.distribution_center.domain.pojo.Job;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,5 +17,12 @@ public interface InitService {
      */
     Map<String, Object> healthCheck();
 
+    /**
+     * 传入任务并部署
+     *
+     * @param jobs
+     * @return
+     */
+    Map<String, Object> incomingJobs(List<Job> jobs);
 
 }
