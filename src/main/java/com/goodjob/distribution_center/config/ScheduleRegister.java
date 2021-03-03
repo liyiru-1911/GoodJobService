@@ -4,6 +4,7 @@ import com.goodjob.distribution_center.domain.ScheduleTask;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.config.CronTask;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 定时任务注册中心
  */
+@Component
 public class ScheduleRegister {
 
     @Autowired

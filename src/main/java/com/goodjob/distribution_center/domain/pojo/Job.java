@@ -26,10 +26,10 @@ public class Job {
     private String platformName;
 
     // 路由策略代号
-    private String routingPolicyCode;
+    private String routingStrategyCode;
 
     // 路由策略名
-    private String routingPolicyName;
+    private String routingStrategyName;
 
     // 重试次数
     private Integer reTryTimes;
@@ -100,20 +100,20 @@ public class Job {
         this.platformName = platformName;
     }
 
-    public String getRoutingPolicyCode() {
-        return routingPolicyCode;
+    public String getRoutingStrategyCode() {
+        return routingStrategyCode;
     }
 
-    public void setRoutingPolicyCode(String routingPolicyCode) {
-        this.routingPolicyCode = routingPolicyCode;
+    public void setRoutingStrategyCode(String routingStrategyCode) {
+        this.routingStrategyCode = routingStrategyCode;
     }
 
-    public String getRoutingPolicyName() {
-        return routingPolicyName;
+    public String getRoutingStrategyName() {
+        return routingStrategyName;
     }
 
-    public void setRoutingPolicyName(String routingPolicyName) {
-        this.routingPolicyName = routingPolicyName;
+    public void setRoutingStrategyName(String routingStrategyName) {
+        this.routingStrategyName = routingStrategyName;
     }
 
     public String getStatus() {
