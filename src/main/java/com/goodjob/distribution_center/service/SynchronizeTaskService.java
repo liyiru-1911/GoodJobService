@@ -1,5 +1,7 @@
 package com.goodjob.distribution_center.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.goodjob.distribution_center.domain.Entity.Task;
 import com.goodjob.distribution_center.domain.pojo.Job;
 
 import java.util.Map;
@@ -16,12 +18,12 @@ public interface SynchronizeTaskService {
      * @param job
      * @return
      */
-    Map<String, Object> generateTask(Job job);
+    Task generateTask(Job job);
 
     /**
      * 保存worker确认接受任务信息
      */
-    Map<String, Object> saveConfirmation(Map<String, Object> taskConfirmation);
+    void saveConfirmation(int task, JSONObject distributeResult);
 
     /**
      * 保存任务执行结果并同步到JobCenter
