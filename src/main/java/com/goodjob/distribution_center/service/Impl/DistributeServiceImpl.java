@@ -34,10 +34,14 @@ public class DistributeServiceImpl implements DistributeService {
         PlatformCache platformCache = PlatformCache.getInstance();
         Platform platform = platformCache.get(job.getPlatformUuid());
 
-        String workerUrl = routingStrategy.findWorkerByRoutingStrategy(platform, job.getRoutingStrategyCode());
+        System.out.println(job.getName() + "开始分发！");
+        System.out.println("当前线程：" + Thread.currentThread().getName());
+        System.out.println("**********************************");
 
         Task task = synchronizeTaskService.generateTask(job);
         int taskId = taskDao.insert(task);
+
+        String workerUrl = routingStrategy.findWorkerByRoutingStrategy(platform, job.getRoutingStrategyCode());
 
         Handler handler = createHandler(localHostUrl, taskId, job);
 

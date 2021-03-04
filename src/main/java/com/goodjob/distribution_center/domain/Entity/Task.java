@@ -1,6 +1,5 @@
 package com.goodjob.distribution_center.domain.Entity;
 
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 

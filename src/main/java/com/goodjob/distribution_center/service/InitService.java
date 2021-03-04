@@ -1,6 +1,7 @@
 package com.goodjob.distribution_center.service;
 
 import com.goodjob.distribution_center.domain.pojo.Job;
+import com.goodjob.distribution_center.domain.pojo.Platform;
 
 import java.util.List;
 import java.util.Map;
@@ -24,5 +25,13 @@ public interface InitService {
      * @return
      */
     Map<String, Object> incomingJobs(List<Job> jobs);
+
+    /**
+     * 传入平台信息并部署
+     *
+     * @param platforms
+     * @return
+     */
+    Map<String, Object> incomingPlatforms(List<Platform> platforms);
 
 }
