@@ -1,6 +1,8 @@
 package com.goodjob.distribution_center.config;
 
+import com.goodjob.distribution_center.domain.JobCache;
 import com.goodjob.distribution_center.domain.ScheduleTask;
+import com.goodjob.distribution_center.service.DistributeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.config.CronTask;
@@ -17,6 +19,8 @@ public class ScheduleRegister {
 
     @Autowired
     private TaskScheduler taskScheduler;
+    @Autowired
+    DistributeService distributeService;
 
     private Map<String, ScheduleTask> scheduleTaskMap = new ConcurrentHashMap<>();
 
@@ -33,5 +37,19 @@ public class ScheduleRegister {
     public void remove(String id) {
         ScheduleTask scheduleTask = this.scheduleTaskMap.remove(id);
         if (scheduleTask != null) scheduleTask.stop();
+    }
+
+    public void loadJob(String jobUuid) {
+        String cron = JobCache.getInstance().get(jobUuid).getCron();
+        Runnable task = ()-> {
+            try {
+                if (cron != null) {
+                    distributeService.createTaskAndDistributeIt(jobUuid);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        };
+        add(task, cron, jobUuid);
     }
 }

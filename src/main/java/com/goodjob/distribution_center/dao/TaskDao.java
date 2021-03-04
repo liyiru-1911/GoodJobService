@@ -13,4 +13,5 @@ public interface TaskDao {
     @Insert("insert into task(job_uuid, last_run_start_time, last_run_end_time, accepted, success, msg) values (#{jobUuid}, #{lastRunStartTime}, #{lastRunEndTime}, #{accepted}, #{success}, #{msg})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     int insert(Task task);
+
 }
