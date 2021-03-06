@@ -39,12 +39,13 @@ public class ScheduleRegister {
         if (scheduleTask != null) scheduleTask.stop();
     }
 
+    // 装载调度定时任务
     public void loadJob(String jobUuid) {
         String cron = JobCache.getInstance().get(jobUuid).getCron();
         Runnable task = ()-> {
             try {
                 if (cron != null) {
-                    distributeService.createTaskAndDistributeIt(jobUuid);
+                    distributeService.createTaskAndDistributeItForFirstTime(jobUuid);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

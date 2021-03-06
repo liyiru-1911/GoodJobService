@@ -8,22 +8,27 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class SynchronizeTaskServiceImpl implements SynchronizeTaskService {
 
     @Override
-    public Task generateTask(Job job) {
+    public Task generateTask(Job job, String workerUrl) {
         Task task = new Task();
         task.setJobUuid(job.getUuid());
+        task.setTryTimes(1);
+        task.setLastRunWorkerUrl(workerUrl);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         task.setLastRunStartTime(df.format(new Date()));
         return task;
     }
 
     @Override
-    public void saveConfirmation(int taskId, JSONObject distributeResult) {
+    public void saveConfirmation(int taskId, HashMap distributeResult) {
+        System.out.println("*************worker是否确认接收任务应答***************");
+        System.out.println(distributeResult.get("success"));
     }
 
     @Override
