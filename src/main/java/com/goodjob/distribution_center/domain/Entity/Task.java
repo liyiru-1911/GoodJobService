@@ -27,9 +27,9 @@ public class Task {
     @Column(name = "last_run_end_time")
     private String lastRunEndTime;
 
-    // 最近一次执行的worker ip (标识执行机、用于故障转移路由策略)
-    @Column(name = "last_run_worker_ip")
-    private String lastRunWorkerIp;
+    // 最近一次执行的worker url (标识执行机、用于故障转移路由策略)
+    @Column(name = "last_run_worker_url")
+    private String lastRunWorkerUrl;
 
     // 是否被worker接受
     @Column(name = "accepted")
@@ -80,12 +80,12 @@ public class Task {
         this.lastRunEndTime = lastRunEndTime;
     }
 
-    public String getLastRunWorkerIp() {
-        return lastRunWorkerIp;
+    public String getLastRunWorkerUrl() {
+        return lastRunWorkerUrl;
     }
 
-    public void setLastRunWorkerIp(String lastRunWorkerIp) {
-        this.lastRunWorkerIp = lastRunWorkerIp;
+    public void setLastRunWorkerUrl(String lastRunWorkerUrl) {
+        this.lastRunWorkerUrl = lastRunWorkerUrl;
     }
 
     public Boolean getAccepted() {

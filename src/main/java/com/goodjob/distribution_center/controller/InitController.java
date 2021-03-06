@@ -5,7 +5,6 @@ import com.goodjob.distribution_center.domain.pojo.Platform;
 import com.goodjob.distribution_center.service.InitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -65,7 +64,7 @@ public class InitController {
         platform.setUuid("123");
         platform.setName("测试平台");
         String[] servers = new String[1];
-        servers[0] = "192.168.8.103:8888/goodJobWorker/run";
+        servers[0] = "http://localhost:8080/goodJobWorker/run";
         platform.setServers(servers);
         List<Platform> platforms = new ArrayList<>();
         platforms.add(platform);

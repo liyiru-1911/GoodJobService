@@ -1,5 +1,6 @@
 package com.goodjob.distribution_center.worker;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +17,13 @@ public class WorkerController {
     @Autowired
     WorkerService workerService;
 
-    @GetMapping("/run")
-    public Map<String, Object> run() {
+    @PostMapping("/run")
+    public Map<String, Object> run(@RequestBody Handler handler) {
         // TODO 根据入参序列化出handler
         Map<String, Object> result = new HashMap<>();
         try {
             System.out.println("***任务进入***");
-            workerService.findHandlerAndRunThenSendResultBack(getHandlerTest());
+            workerService.findHandlerAndRunThenSendResultBack(handler);
             result.put("success", true);
             result.put("msg", "执行器状态健康，分发成功");
         } catch (RejectedExecutionException e) {

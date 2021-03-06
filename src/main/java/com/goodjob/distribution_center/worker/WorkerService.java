@@ -19,8 +19,8 @@ public class WorkerService {
     @Async("workerTaskExecutor")
     public void findHandlerAndRunThenSendResultBack(Handler handler) {
         Map<String, Object> result = new HashMap<>();
-
         try {
+            System.out.println("worker收到的handler：" + handler.toString());
             result = findHandlerAndRun(handler);
         } catch (Exception e) {
             result.put("success", false);

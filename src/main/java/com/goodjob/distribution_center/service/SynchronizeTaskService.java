@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.goodjob.distribution_center.domain.Entity.Task;
 import com.goodjob.distribution_center.domain.pojo.Job;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,12 +19,12 @@ public interface SynchronizeTaskService {
      * @param job
      * @return
      */
-    Task generateTask(Job job);
+    Task generateTask(Job job, String workerUrl);
 
     /**
      * 保存worker确认接受任务信息
      */
-    void saveConfirmation(int task, JSONObject distributeResult);
+    void saveConfirmation(int task, HashMap distributeResult);
 
     /**
      * 保存任务执行结果并同步到JobCenter

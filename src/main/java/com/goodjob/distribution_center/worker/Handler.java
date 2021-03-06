@@ -1,5 +1,7 @@
 package com.goodjob.distribution_center.worker;
 
+import java.util.Arrays;
+
 /**
  * worker处理所需全部参数类
  *
@@ -82,5 +84,17 @@ public class Handler {
 
     public void setTaskId(int taskId) {
         this.taskId = taskId;
+    }
+
+    @Override
+    public String toString() {
+        return "Handler{" +
+                "className='" + className + '\'' +
+                ", methodName='" + methodName + '\'' +
+                ", paramTypes=" + Arrays.toString(paramTypes) +
+                ", params=" + Arrays.toString(params) +
+                ", taskUrl='" + taskUrl + '\'' +
+                ", taskId=" + taskId +
+                '}';
     }
 }

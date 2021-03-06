@@ -6,7 +6,7 @@ package com.goodjob.distribution_center.service;
 public interface DistributeService {
 
     /**
-     * 调度中心核心服务 - 分发任务
+     * 调度中心核心服务 - 首次分发任务
      * job A的时间到，根据A的uuid查询到其详情
      * 创建task
      * 创建处理请求Handler
@@ -17,6 +17,6 @@ public interface DistributeService {
      *
      * @param uuid 被调度job的uuid
      */
-    void createTaskAndDistributeIt(String uuid);
+    void createTaskAndDistributeItForFirstTime(String uuid);
 
 }
