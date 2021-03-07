@@ -1,5 +1,7 @@
 package com.goodjob.distribution_center.service;
 
+import com.goodjob.distribution_center.domain.Entity.Task;
+
 /**
  * 任务分发服务
  */
@@ -18,5 +20,10 @@ public interface DistributeService {
      * @param uuid 被调度job的uuid
      */
     void createTaskAndDistributeItForFirstTime(String uuid);
+
+    /**
+     * 再次分发任务
+     */
+    void distributeAgain(Task task);
 
 }

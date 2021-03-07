@@ -15,6 +15,7 @@ import com.goodjob.distribution_center.service.SynchronizeTaskService;
 import com.goodjob.distribution_center.utils.RoutingStrategy;
 import com.goodjob.distribution_center.worker.Handler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ import java.util.Map;
 @Service
 public class DistributeServiceImpl implements DistributeService {
     // TODO 测试，需要统一配置
-    private static final String localHostUrl = "111.222.111.22:8080/incomingTaskResult";
+    private static final String localHostUrl = "111.222.111.22:8080";
 
     @Autowired
     SynchronizeTaskService synchronizeTaskService;
@@ -37,14 +38,22 @@ public class DistributeServiceImpl implements DistributeService {
     Serialization serialization;
 
     @Override
-    public void createTaskAndDistributeItForFirstTime(String uuid) {
-
+    public void createTaskAndDistributeItForFirstTime(String jobUuid) {
         JobCache jobCache = JobCache.getInstance();
-        Job job = jobCache.get(uuid);
+        Job job = jobCache.get(jobUuid);
         PlatformCache platformCache = PlatformCache.getInstance();
         Platform platform = platformCache.get(job.getPlatformUuid());
+        if (platform == null) {
+            synchronizeTaskService.saveNoPlatformResult(job);
+            return;
+        }
 
-        String workerUrl = routingStrategy.findWorkerByRoutingStrategyForFirstTime(platform, job.getRoutingStrategyCode());
+        String workerUrl = "";
+        try {
+            workerUrl = routingStrategy.findWorkerByRoutingStrategyForFirstTime(platform, job.getRoutingStrategyCode());
+        } catch (Exception e) {
+            synchronizeTaskService.saveRoutingStrategyExceptionResult(job);
+        }
 
         Task task = synchronizeTaskService.generateTask(job, workerUrl);
         int taskId = taskDao.insert(task);
@@ -52,7 +61,34 @@ public class DistributeServiceImpl implements DistributeService {
         Handler handler = createHandler(localHostUrl, taskId, job);
 
         HashMap distributeResult = distributeHandlerToWorker(workerUrl, handler);
-        synchronizeTaskService.saveConfirmation(taskId, distributeResult);
+        synchronizeTaskService.saveConfirmationResult(taskId, distributeResult);
+    }
+
+    @Override
+    @Async("tryAgainTaskExecutor")
+    public void distributeAgain(Task task) {
+        JobCache jobCache = JobCache.getInstance();
+        Job job = jobCache.get(task.getJobUuid());
+        PlatformCache platformCache = PlatformCache.getInstance();
+        Platform platform = platformCache.get(job.getPlatformUuid());
+        if (platform == null) {
+            synchronizeTaskService.saveNoPlatformResult(task);
+            return;
+        }
+
+        String workerUrl = "";
+        try{
+            workerUrl = routingStrategy.findWorkerByRoutingStrategyForTryAgain(platform, job.getRoutingStrategyCode(), task);
+        } catch (Exception e) {
+            synchronizeTaskService.saveRoutingStrategyExceptionResult(task);
+        }
+
+        synchronizeTaskService.changeTaskWhenTryAgain(task, workerUrl);
+
+        Handler handler = createHandler(localHostUrl, task.getId(), job);
+
+        HashMap distributeResult = distributeHandlerToWorker(workerUrl, handler);
+        synchronizeTaskService.saveConfirmationResult(task.getId(), distributeResult);
     }
 
     /**
@@ -69,13 +105,13 @@ public class DistributeServiceImpl implements DistributeService {
         handler.setMethodName(job.getMethodName());
         handler.setParamTypes(job.getParamTypes());
         handler.setParams(job.getParams());
-        handler.setTaskUrl(localHostUrl);
+        handler.setTaskUrl(localHostUrl + "/saveTaskResult/save");
         handler.setTaskId(taskId);
         return handler;
     }
 
     /**
-     * TODO 分发任务请求
+     * 分发任务请求
      *
      * @param workerUrl
      * @param handler

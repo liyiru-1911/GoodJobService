@@ -1,6 +1,5 @@
 package com.goodjob.distribution_center.worker;
 
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,19 +34,4 @@ public class WorkerController {
         return result;
     }
 
-    // 测试用Handler
-    private Handler getHandlerTest() {
-        Handler handler = new Handler();
-        handler.setClassName("com.goodjob.distribution_center.worker.TestRunHandler");
-        handler.setMethodName("workerProcessJob");
-        String[] paramTypes = new String[2];
-        paramTypes[0] = "java.lang.String";
-        paramTypes[1] = "java.lang.Integer";
-        handler.setParamTypes(paramTypes);
-        Object[] params = new Object[2];
-        params[0] = "hello word";
-        params[1] = 6;
-        handler.setParams(params);
-        return handler;
-    }
 }
