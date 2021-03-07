@@ -27,9 +27,9 @@ public class Task {
     @Column(name = "last_run_end_time")
     private String lastRunEndTime;
 
-    // 最近一次执行的worker url (标识执行机、用于故障转移路由策略)
-    @Column(name = "last_run_worker_url")
-    private String lastRunWorkerUrl;
+    // 用过的worker url,用逗号隔开，后使用者加在后面 (标识执行机、用于故障转移路由策略)
+    @Column(name = "used_worker_urls")
+    private String usedWorkerUrls;
 
     // 是否被worker接受
     @Column(name = "accepted")
@@ -46,6 +46,9 @@ public class Task {
     // 执行结果消息
     @Column(name = "msg")
     private String msg;
+
+    @Column(name = "complete")
+    private String complete;
 
 
     public Integer getId() {
@@ -80,12 +83,12 @@ public class Task {
         this.lastRunEndTime = lastRunEndTime;
     }
 
-    public String getLastRunWorkerUrl() {
-        return lastRunWorkerUrl;
+    public String getUsedWorkerUrls() {
+        return usedWorkerUrls;
     }
 
-    public void setLastRunWorkerUrl(String lastRunWorkerUrl) {
-        this.lastRunWorkerUrl = lastRunWorkerUrl;
+    public void setUsedWorkerUrls(String usedWorkerUrls) {
+        this.usedWorkerUrls = usedWorkerUrls;
     }
 
     public Boolean getAccepted() {
@@ -118,5 +121,13 @@ public class Task {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+    public String getComplete() {
+        return complete;
+    }
+
+    public void setComplete(String complete) {
+        this.complete = complete;
     }
 }
