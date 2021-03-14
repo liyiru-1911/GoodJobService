@@ -8,22 +8,18 @@ import com.goodjob.distribution_center.domain.Entity.Task;
 public interface DistributeService {
 
     /**
-     * 调度中心核心服务 - 首次分发任务
-     * job A的时间到，根据A的uuid查询到其详情
+     * 调度中心核心服务 - 分发任务
+     * 查询job详情
      * 创建task
-     * 创建处理请求Handler
-     * 获取A所属的平台信息
-     * 根据A的路由策略选择机器
-     * 分发Handler并回填是否分发成功（并非是否执行成功）
-     * 保存task
+     * 查询所使用的的平台信息
+     * 查询路由策略
+     * 更新task
+     * 合成Handler
+     * 分发任务
+     * 接受worker的确认信息
      *
-     * @param uuid 被调度job的uuid
+     * @param jobUuid
+     * @param task 首次创建则为null
      */
-    void createTaskAndDistributeItForFirstTime(String uuid);
-
-    /**
-     * 再次分发任务
-     */
-    void distributeAgain(Task task);
-
+    void distributeJob(String jobUuid, Task task);
 }
