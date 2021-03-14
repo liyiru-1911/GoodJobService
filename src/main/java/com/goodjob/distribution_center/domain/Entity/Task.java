@@ -27,15 +27,11 @@ public class Task {
     @Column(name = "last_run_end_time")
     private String lastRunEndTime;
 
-    // 用过的worker url,用逗号隔开，后使用者加在后面 (标识执行机、用于故障转移路由策略)
+    // 用过的worker url,用逗号隔开，后使用者加在后面 (标识执行机，用于故障转移路由策略)
     @Column(name = "used_worker_urls")
     private String usedWorkerUrls;
 
-    // 是否被worker接受
-    @Column(name = "accepted")
-    private Boolean accepted;
-
-    // 执行次数
+    // 已经执行次数
     @Column(name = "try_times")
     private Integer tryTimes;
 
@@ -47,6 +43,7 @@ public class Task {
     @Column(name = "msg")
     private String msg;
 
+    // 该执行任务是否已经终结（用于标识是否可以被同步回JobCenter）
     @Column(name = "complete")
     private String complete;
 
@@ -89,14 +86,6 @@ public class Task {
 
     public void setUsedWorkerUrls(String usedWorkerUrls) {
         this.usedWorkerUrls = usedWorkerUrls;
-    }
-
-    public Boolean getAccepted() {
-        return accepted;
-    }
-
-    public void setAccepted(Boolean accepted) {
-        this.accepted = accepted;
     }
 
     public Integer getTryTimes() {

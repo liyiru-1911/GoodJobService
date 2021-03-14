@@ -12,23 +12,15 @@ import java.util.Map;
  */
 public interface SynchronizeTaskService {
 
+
     /**
-     * 生成任务执行情况
+     * 生成任务执行情况 （区分首次执行和重试两种情况）
      *
      * @param job
+     * @param task 如果为空，则是首次创建；否则更新状态即可
      * @return
      */
-    Task generateTask(Job job, String workerUrl);
-
-    /**
-     * 再次执行时改变执行结果信息
-     */
-    void changeTaskWhenTryAgain(Task task, String workerUrl);
-
-    /**
-     * 保存找不到平台信息异常 - 首次创建
-     */
-    void saveNoPlatformResult(Job job);
+    void generateTask(Job job, Task task);
 
     /**
      * 保存找不到平台信息异常
@@ -36,17 +28,17 @@ public interface SynchronizeTaskService {
     void saveNoPlatformResult(Task task);
 
     /**
-     * 处理路由策略异常 - 首次创建
-     */
-    void saveRoutingStrategyExceptionResult(Job job);
-
-    /**
      * 处理路由策略异常
      */
-    void saveRoutingStrategyExceptionResult(Task task);
+    void saveRoutingStrategyExceptionResult(Task task, String exceptionMsg);
 
     /**
-     * 保存worker确认接受任务信息
+     * 保存路由策略选取的worker
+     */
+    void saveWorkerUrl(Task task, String workerUrl);
+
+    /**
+     * 保存worker返回的确认接受
      */
     void saveConfirmationResult(int taskId, HashMap distributeResult);
 

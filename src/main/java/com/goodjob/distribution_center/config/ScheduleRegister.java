@@ -45,7 +45,7 @@ public class ScheduleRegister {
         Runnable task = ()-> {
             try {
                 if (cron != null) {
-                    distributeService.createTaskAndDistributeItForFirstTime(jobUuid);
+                    distributeService.distributeJob(jobUuid, null);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
