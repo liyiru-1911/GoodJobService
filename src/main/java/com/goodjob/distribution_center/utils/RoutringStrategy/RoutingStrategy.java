@@ -19,11 +19,8 @@ import org.springframework.stereotype.Component;
 public class RoutingStrategy {
 
     public String findWorkerByRoutingStrategy(Platform platform, String routingStrategyCode, Task task) throws Exception {
-        if (platform.getServers().length >= 1) {
-            return platform.getServers()[0];
-        } else {
-            throw new RoutingStrategyException("平台服务器数量为0");
-        }
+        FindServer findServer = FindServerFactory.getFindServer(routingStrategyCode);
+        return findServer.findServer(platform, task);
     }
 
 }
